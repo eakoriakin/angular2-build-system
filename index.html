@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <base href="/">
+        <link rel="stylesheet" href="styles.css">
+        <script src="libraries/angular2/angular2-polyfills.js"></script>
+        <script src="libraries/systemjs/system.src.js"></script>
+        <script src="libraries/rxjs/Rx.js"></script>
+        <script src="libraries/angular2/angular2.dev.js"></script>
+        <script src="libraries/angular2/router.dev.js"></script>
+        <script>
+            System.config({
+                packages: {
+                    app: {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    },
+                    'node-uuid': {
+                        map: {
+                            crypto: '@empty'
+                        }
+                    }
+                },
+                map: {
+                    immutable: 'libraries/immutable/immutable.js',
+                    'node-uuid': 'libraries/node-uuid/uuid.js'
+                }
+            });
 
-<head>
-  <base href="/">
-  <link rel="stylesheet" href="styles.css">
-  <script src="lib/angular2-polyfills.js"></script>
-  <script src="lib/system.src.js"></script>
-  <script src="lib/Rx.js"></script>
-  <script src="lib/angular2.dev.js"></script>
-  <script src="lib/router.dev.js"></script>
-  <script>
-      System.config({
-        packages: {
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          },
-          'node-uuid': {
-            map: {
-              crypto: '@empty'
-            }
-          }
-        },
-        map: {
-          immutable: 'lib/immutable.js',
-          'node-uuid': 'lib/uuid.js'
-        }
-      });
-      System.import('app/boot')
-            .then(null, console.error.bind(console));
-  </script>
-</head>
-
-<body>
-  <my-app>Loading...</my-app>
-</body>
-
+            System.import('app/boot')
+                .then(null, console.error.bind(console));
+        </script>
+    </head>
+    <body>
+        <app>Loading...</app>
+    </body>
 </html>

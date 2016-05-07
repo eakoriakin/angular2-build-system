@@ -3,12 +3,12 @@ import {HEROES} from './mock-heroes';
 
 @Injectable()
 export class HeroService {
-  getHeroes() {
-    return Promise.resolve(HEROES);
-  }
+    getHeroes() {
+        return Promise.resolve(HEROES);
+    }
 
-  getHero(id: string) {
-    return Promise.resolve(HEROES)
-      .then(heroes => heroes.filter(h => h.id === id)[0]);
-  }
+    getHero(id: string) {
+        return Promise.resolve(HEROES)
+            .then(heroes => heroes.filter(hero => hero.id === id)[0]);
+    }
 }

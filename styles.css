@@ -1,4 +1,148 @@
-h2 { color: #444; font-weight: lighter; }
-body { margin: 2em; }
-body, input[text], button { color: #888; font-family: Cambria, Georgia; }
-button {padding: 0.2em; font-size: 14px}
+h2 {
+    color: #444;
+    font-weight: lighter;
+}
+
+body {
+    margin: 2em;
+}
+
+body, input[text], button {
+    color: #888;
+    font-family: Cambria, Georgia;
+}
+
+button {
+    padding: 0.2em;
+    font-size: 14px;
+}
+
+/*header*/
+.header a {
+    padding: 5px;
+    text-decoration: none;
+}
+
+.header a:visited, a:link {
+    color: #444;
+}
+
+.header a:hover {
+    color: white;
+    background-color: #1171a3;
+}
+
+.header a.router-link-active {
+    color: white;
+    background-color: #52b9e9;
+}
+/*.*/
+
+/*dashboard*/
+.dashboard [class*='col-'] {
+    float: left;
+}
+
+.dashboard *, .dashboard *:after, .dashboard *:before {
+	box-sizing: border-box;
+}
+
+.dashboard h3 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.dashboard [class*='col-'] {
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.dashboard [class*='col-']:last-of-type {
+    padding-right: 0;
+}
+
+.dashboard .grid {
+    margin: 0 10em;
+}
+
+.dashboard .col-1-4 {
+    width: 25%;
+}
+
+.dashboard .module {
+	padding: 20px;
+	text-align: center;
+	color: #eee;
+	max-height: 120px;
+	min-width: 120px;
+	background-color: #1171a3;
+}
+
+.dashboard .module:hover {
+    background-color: #52b9e9;
+    cursor: pointer;
+}
+
+.dashboard .grid-pad {
+    padding: 20px 0 20px 20px;
+}
+
+.dashboard .grid-pad > [class*='col-']:last-of-type {
+    padding-right: 20px;
+}
+
+@media (max-width: 600px) {
+	.dashboard .module {
+        font-size: 10px;
+        max-height: 75px;
+    }
+}
+
+@media (max-width: 1024px) {
+	.dashboard .grid {
+        margin: 0;
+    }
+
+	.dashboard .module {
+        min-width: 60px;
+    }
+}
+/*.*/
+
+/*heroes*/
+.heroes ul {
+    list-style-type: none;
+    margin-left: 1em;
+    padding: 0;
+    width: 40em;
+}
+
+.heroes li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    transition: all 0.2s ease;
+}
+
+.heroes li:hover {
+    color: #369;
+    background-color: #EEE;
+    left: .2em;
+}
+
+.heroes .badge {
+	font-size: small;
+	color: white;
+	padding: 0.1em 0.7em;
+	background-color: #369;
+	line-height: 1em;
+	position: relative;
+	left: -1px;
+	top: -1px;
+}
+
+.heroes .selected {
+    background-color: #EEE;
+    color: #369;
+}
+/*.*/

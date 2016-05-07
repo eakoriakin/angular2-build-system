@@ -24,7 +24,6 @@
         "gulp-sourcemaps": "2.0.0-alpha",
         "gulp-tslint": "5.0.0",
         "gulp-typescript": "2.13.1",
-        "tsconfig-glob": "0.4.3",
         "tsd": "0.6.5",
         "tslint": "3.9.0",
         "typescript": "1.8.10"

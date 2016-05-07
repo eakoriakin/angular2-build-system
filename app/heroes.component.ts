@@ -6,31 +6,32 @@ import {Hero} from './hero';
 import { List } from 'immutable';
 
 @Component({
-  selector: 'my-heroes',
-  templateUrl: 'app/heroes.component.html',
-  styleUrls: ['app/heroes.component.css'],
-  directives: [HeroDetailComponent]
+    selector: 'my-heroes',
+    templateUrl: 'app/heroes.component.html',
+    directives: [HeroDetailComponent]
 })
 export class HeroesComponent implements OnInit {
-  public heroes = List<Hero>();
-  public selectedHero: Hero;
+    public heroes = List<Hero>();
+    public selectedHero: Hero;
 
-  constructor(private _heroService: HeroService, private _router: Router) { }
+    constructor(private _heroService: HeroService, private _router: Router) { }
 
-  getHeroes() {
-    this.selectedHero = undefined;
-    this._heroService.getHeroes().then(heroes => this.heroes = heroes);
+    getHeroes() {
+        this.selectedHero = undefined;
+        this._heroService.getHeroes().then(heroes => this.heroes = heroes);
 
-    return this.heroes;
-  }
+        return this.heroes;
+    }
 
-  gotoDetail() {
-    this._router.navigate(['HeroDetail', { id: this.selectedHero.id }]);
-  }
+    gotoDetail() {
+        this._router.navigate(['HeroDetail', { id: this.selectedHero.id }]);
+    }
 
-  ngOnInit() {
-    this.heroes = this.getHeroes();
-  }
+    ngOnInit() {
+        this.heroes = this.getHeroes();
+    }
 
-  onSelect(hero: Hero) { this.selectedHero = hero; }
+    onSelect(hero: Hero) {
+        this.selectedHero = hero;
+    }
 }
