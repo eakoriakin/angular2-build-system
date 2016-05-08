@@ -1,0 +1,65 @@
+.dashboard {
+    h3 {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    [class*='col-'] {
+        float: left;
+        padding-right: 20px;
+        padding-bottom: 20px;
+
+        &:last-of-type {
+            padding-right: 0;
+        }
+    }
+
+    .grid {
+        margin: 0 10em;
+    }
+
+    .grid-pad {
+        padding: 20px 0 20px 20px;
+
+        & > [class*='col-']:last-of-type {
+            padding-right: 20px;
+        }
+    }
+
+    .col-1-4 {
+        width: 25%;
+    }
+
+    .module {
+    	padding: 20px;
+    	text-align: center;
+    	color: #eee;
+    	max-height: 120px;
+    	min-width: 120px;
+    	background-color: #1171a3;
+
+        &:hover {
+            background-color: #52b9e9;
+            cursor: pointer;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+	.dashboard .module {
+        font-size: 10px;
+        max-height: 75px;
+    }
+}
+
+@media (max-width: 1024px) {
+	.dashboard {
+        .grid {
+            margin: 0;
+        }
+
+        .module {
+            min-width: 60px;
+        }
+    }
+}

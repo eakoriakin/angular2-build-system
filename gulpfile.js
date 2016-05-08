@@ -1,3 +1,8 @@
+// TODO:
+/*
+    - copy-js task does not work.
+*/
+
 const gulp = require('gulp'),
     del = require('del'),
     typescript = require('gulp-typescript'),
@@ -5,11 +10,28 @@ const gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     tslint = require('gulp-tslint'),
     browserSync = require('browser-sync'),
-    reload = browserSync.reload;
+    reload = browserSync.reload,
+    concat = require('gulp-concat'),
+    less = require('gulp-less');
+
+var paths = {
+    source: {
+        css: 'app/**/*.less',
+        js: 'app/**/*.ts',
+        html: 'app/**/*.html',
+        index: 'index.html'
+    },
+    build: {
+        root: 'build',
+        css: 'build/css',
+        js: 'build/js',
+        html: 'build/js',
+    }
+}
 
 // Cleans the distribution directory.
 gulp.task('clean', function () {
-    return del('dist/**/*');
+    return del('build/**/*');
 });1
 
 // Copies dependencies to the distribution directory.
@@ -19,84 +41,89 @@ gulp.task('copy-libraries', ['clean'], function() {
         'node_modules/angular2/bundles/angular2.dev.js',
         'node_modules/angular2/bundles/router.dev.js',
     ])
-    .pipe(gulp.dest('dist/libraries/angular2'));
+    .pipe(gulp.dest('build/libraries/angular2'));
 
     gulp.src([
         'node_modules/systemjs/dist/system.src.js'
     ])
-    .pipe(gulp.dest('dist/libraries/systemjs'));
+    .pipe(gulp.dest('build/libraries/systemjs'));
 
     gulp.src([
         'node_modules/rxjs/bundles/Rx.js'
     ])
-    .pipe(gulp.dest('dist/libraries/rxjs'));
+    .pipe(gulp.dest('build/libraries/rxjs'));
 
     gulp.src([
         'node_modules/node-uuid/uuid.js'
     ])
-    .pipe(gulp.dest('dist/libraries/node-uuid'));
+    .pipe(gulp.dest('build/libraries/node-uuid'));
 
     return gulp.src([
         'node_modules/immutable/dist/immutable.js'
     ])
-    .pipe(gulp.dest('dist/libraries/immutable'));
+    .pipe(gulp.dest('build/libraries/immutable'));
 });
 
 // Copies static assets to the distribution directory.
-gulp.task('copy-assets', ['clean'], function() {
-    return gulp.src([
-            'app/**/*',
-            'index.html',
-            'styles.css',
-            '!app/**/*.ts'
-        ],
-        { base : './' }
-    )
-    .pipe(gulp.dest('dist'))
+// gulp.task('compile', ['clean', 'copy-css'], function() {
+//     return gulp.src([
+//             'app/**/*',
+//             'index.html',
+//             '!app/**/*.ts',
+//             '!app/**/*.less'
+//         ],
+//         { base : './' }
+//     )
+//     .pipe(gulp.dest('build'))
+// });
+
+// Compiles TypeScript and copies it to the distribution directory.
+gulp.task('copy-html', function () {
+    gulp.src(paths.source.index, { base : './'})
+        .pipe(gulp.dest(paths.build.root));
+
+    return gulp.src(paths.source.html, { base : './'})
+        .pipe(gulp.dest(paths.build.html));
 });
 
-// Compiles the project.
-gulp.task('compile', ['clean'], function () {
+// Compiles TypeScript and copies it to the distribution directory.
+gulp.task('copy-js', function () {
     return gulp
         .src(tsConfig.files)
         .pipe(sourcemaps.init())
         .pipe(typescript(tsConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist/app'));
+        .pipe(gulp.dest(paths.build.js));
+});
+
+// Compiles CSS, copies it to the distribution directory and auto-injects it into browsers.
+gulp.task('copy-css', function() {
+    return gulp.src(paths.source.css)
+        .pipe(concat('app.css'))
+        .pipe(less())
+        .pipe(gulp.dest(paths.build.css))
+        .pipe(browserSync.stream());
 });
 
 // Lints the project.
 gulp.task('tslint', function() {
-    return gulp.src('app/**/*.ts')
+    return gulp.src(paths.source.js)
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
 });
 
-// Runs browsersync for development.
-gulp.task('serve', ['build'], function() {
+// Runs the project.
+gulp.task('start', ['build'], function() {
     browserSync.init({
         server: {
-            baseDir: 'dist'
+            baseDir: 'build'
         }
     });
 
-    gulp.watch(['app/**/*', 'index.html', 'styles.css'], ['build-and-reload']);
-    //
-    // gulp.watch('app/*.css', ['css']);
-
-    // gulp.watch(['app/**/*', 'index.html', 'styles.css'], ['build'])
-    //     .on('change', browserSync.reload);
-
-    // gulp.watch('styles.css').on('change', browserSync.reload);
+    gulp.watch(paths.source.css, ['copy-css']);
+    gulp.watch([paths.source.html, paths.source.index], ['copy-html'], browserSync.reload);
+    gulp.watch(paths.source.js, ['copy-js'], browserSync.reload);
 });
 
-// Compile sass into CSS & auto-inject into browsers
-// gulp.task('css', function() {
-//     return gulp.src('app/*.css')
-//         .pipe(gulp.dest("app/css"))
-//         .pipe(browserSync.stream());
-// });
-
-gulp.task('build', ['tslint', 'compile', 'copy-libraries', 'copy-assets']);
-gulp.task('build-and-reload', ['build'], reload);
-gulp.task('default', ['build']);
+gulp.task('build', ['clean', 'tslint', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+gulp.task('default', ['start']);

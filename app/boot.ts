@@ -7,5 +7,5 @@ import {provide} from 'angular2/core';
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
-    provide(LocationStrategy, {useClass: HashLocationStrategy})
+    provide(LocationStrategy, { useClass: HashLocationStrategy })
 ]);
