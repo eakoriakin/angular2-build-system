@@ -1,8 +1,3 @@
-// TODO:
-/*
-    - copy-js task does not work.
-*/
-
 const gulp = require('gulp'),
     del = require('del'),
     typescript = require('gulp-typescript'),
@@ -32,7 +27,7 @@ var paths = {
 // Cleans the distribution directory.
 gulp.task('clean', function () {
     return del('build/**/*');
-});1
+});
 
 // Copies dependencies to the distribution directory.
 gulp.task('copy-libraries', ['clean'], function() {
@@ -64,25 +59,12 @@ gulp.task('copy-libraries', ['clean'], function() {
     .pipe(gulp.dest('build/libraries/immutable'));
 });
 
-// Copies static assets to the distribution directory.
-// gulp.task('compile', ['clean', 'copy-css'], function() {
-//     return gulp.src([
-//             'app/**/*',
-//             'index.html',
-//             '!app/**/*.ts',
-//             '!app/**/*.less'
-//         ],
-//         { base : './' }
-//     )
-//     .pipe(gulp.dest('build'))
-// });
-
 // Compiles TypeScript and copies it to the distribution directory.
 gulp.task('copy-html', function () {
-    gulp.src(paths.source.index, { base : './'})
+    gulp.src(paths.source.index)
         .pipe(gulp.dest(paths.build.root));
 
-    return gulp.src(paths.source.html, { base : './'})
+    return gulp.src(paths.source.html)
         .pipe(gulp.dest(paths.build.html));
 });
 
@@ -112,7 +94,7 @@ gulp.task('tslint', function() {
         .pipe(tslint.report('verbose'));
 });
 
-// Runs the project.
+// Starts the project.
 gulp.task('start', ['build'], function() {
     browserSync.init({
         server: {
@@ -125,5 +107,8 @@ gulp.task('start', ['build'], function() {
     gulp.watch(paths.source.js, ['copy-js'], browserSync.reload);
 });
 
-gulp.task('build', ['clean', 'tslint', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+gulp.task('build', ['clean'], function () {
+    gulp.start(['tslint', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+});
+
 gulp.task('default', ['start']);
