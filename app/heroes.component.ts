@@ -3,7 +3,6 @@ import { Router } from 'angular2/router';
 import { HeroService } from './hero.service';
 import { HeroDetailComponent } from './hero-detail.component';
 import { Hero } from './hero';
-import { List } from 'immutable';
 
 @Component({
     selector: 'my-heroes',
@@ -11,7 +10,7 @@ import { List } from 'immutable';
     directives: [HeroDetailComponent]
 })
 export class HeroesComponent implements OnInit {
-    public heroes = List<Hero>();
+    public heroes = Array<Hero>();
     public selectedHero: Hero;
 
     constructor(private _heroService: HeroService, private _router: Router) { }

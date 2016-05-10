@@ -48,16 +48,6 @@ gulp.task('copy-libraries', ['clean'], function() {
             'node_modules/rxjs/bundles/Rx.js'
         ])
         .pipe(gulp.dest(paths.build.libraries + '/rxjs'));
-
-    gulp.src([
-            'node_modules/node-uuid/uuid.js'
-        ])
-        .pipe(gulp.dest(paths.build.libraries + '/node-uuid'));
-
-    return gulp.src([
-            'node_modules/immutable/dist/immutable.js'
-        ])
-        .pipe(gulp.dest(paths.build.libraries + '/immutable'));
 });
 
 // Compiles TypeScript and copies it to the distribution directory.

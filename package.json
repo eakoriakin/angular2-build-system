@@ -1,17 +1,15 @@
 {
-    "name": "eqwad-demo",
+    "name": "angular2-build-system",
     "version": "0.0.1",
     "license": "(MIT OR Apache-2.0)",
     "repository": {
         "type": "git",
-        "url": "https://github.com/eakoryakin/eqwad-demo"
+        "url": "https://github.com/eakoryakin/angular2-build-system.git"
     },
     "dependencies": {
         "angular2": "2.0.0-beta.17",
         "es6-promise": "3.1.2",
         "es6-shim": "0.35.0",
-        "immutable": "3.8.1",
-        "node-uuid": "1.4.7",
         "reflect-metadata": "0.1.2",
         "rxjs": "5.0.0-beta.6",
         "systemjs": "0.19.27",
@@ -31,7 +29,6 @@
         "typescript": "1.8.10"
     },
     "scripts": {
-        "tslint": "tslint -c tslint.json app/**/*.ts",
         "postinstall": "tsd install"
     }
 }
