@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <base href="/">
         <link rel="stylesheet" href="css/app.css">
         <script src="libraries/angular2/angular2-polyfills.js"></script>
         <script src="libraries/systemjs/system.src.js"></script>
@@ -27,8 +26,7 @@
                 }
             });
 
-            System.import('js/boot.js')
-                .then(null, console.error.bind(console));
+            System.import ('app/boot').then(null, console.error.bind(console));
         </script>
     </head>
     <body>

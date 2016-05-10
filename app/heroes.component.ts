@@ -1,8 +1,8 @@
-import {Component, OnInit} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {HeroService} from './hero.service';
-import {HeroDetailComponent} from './hero-detail.component';
-import {Hero} from './hero';
+import { Component, OnInit } from 'angular2/core';
+import { Router } from 'angular2/router';
+import { HeroService } from './hero.service';
+import { HeroDetailComponent } from './hero-detail.component';
+import { Hero } from './hero';
 import { List } from 'immutable';
 
 @Component({

@@ -19,48 +19,49 @@ var paths = {
     build: {
         root: 'build',
         css: 'build/css',
-        js: 'build/js',
-        html: 'build/js',
+        js: 'build/app',
+        html: 'build/app',
+        libraries: 'build/libraries'
     }
 }
 
 // Cleans the distribution directory.
-gulp.task('clean', function () {
-    return del('build/**/*');
+gulp.task('clean', function() {
+    return del(paths.build.root + '/**/*');
 });
 
 // Copies dependencies to the distribution directory.
 gulp.task('copy-libraries', ['clean'], function() {
     gulp.src([
-        'node_modules/angular2/bundles/angular2-polyfills.js',
-        'node_modules/angular2/bundles/angular2.dev.js',
-        'node_modules/angular2/bundles/router.dev.js',
-    ])
-    .pipe(gulp.dest('build/libraries/angular2'));
+            'node_modules/angular2/bundles/angular2-polyfills.js',
+            'node_modules/angular2/bundles/angular2.dev.js',
+            'node_modules/angular2/bundles/router.dev.js',
+        ])
+        .pipe(gulp.dest(paths.build.libraries + '/angular2'));
 
     gulp.src([
-        'node_modules/systemjs/dist/system.src.js'
-    ])
-    .pipe(gulp.dest('build/libraries/systemjs'));
+            'node_modules/systemjs/dist/system.src.js'
+        ])
+        .pipe(gulp.dest(paths.build.libraries + '/systemjs'));
 
     gulp.src([
-        'node_modules/rxjs/bundles/Rx.js'
-    ])
-    .pipe(gulp.dest('build/libraries/rxjs'));
+            'node_modules/rxjs/bundles/Rx.js'
+        ])
+        .pipe(gulp.dest(paths.build.libraries + '/rxjs'));
 
     gulp.src([
-        'node_modules/node-uuid/uuid.js'
-    ])
-    .pipe(gulp.dest('build/libraries/node-uuid'));
+            'node_modules/node-uuid/uuid.js'
+        ])
+        .pipe(gulp.dest(paths.build.libraries + '/node-uuid'));
 
     return gulp.src([
-        'node_modules/immutable/dist/immutable.js'
-    ])
-    .pipe(gulp.dest('build/libraries/immutable'));
+            'node_modules/immutable/dist/immutable.js'
+        ])
+        .pipe(gulp.dest(paths.build.libraries + '/immutable'));
 });
 
 // Compiles TypeScript and copies it to the distribution directory.
-gulp.task('copy-html', function () {
+gulp.task('copy-html', function() {
     gulp.src(paths.source.index)
         .pipe(gulp.dest(paths.build.root));
 
@@ -69,7 +70,7 @@ gulp.task('copy-html', function () {
 });
 
 // Compiles TypeScript and copies it to the distribution directory.
-gulp.task('copy-js', function () {
+gulp.task('copy-js', function() {
     return gulp
         .src(tsConfig.files)
         .pipe(sourcemaps.init())
@@ -98,7 +99,7 @@ gulp.task('tslint', function() {
 gulp.task('start', ['build'], function() {
     browserSync.init({
         server: {
-            baseDir: 'build'
+            baseDir: paths.build.root
         }
     });
 
@@ -107,7 +108,7 @@ gulp.task('start', ['build'], function() {
     gulp.watch(paths.source.js, ['copy-js'], browserSync.reload);
 });
 
-gulp.task('build', ['clean'], function () {
+gulp.task('build', ['clean'], function() {
     gulp.start(['tslint', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
 });
 
