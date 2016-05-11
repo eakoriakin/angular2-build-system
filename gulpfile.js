@@ -95,11 +95,13 @@ gulp.task('start', ['build'], function() {
         }
     });
 
+    gulp.watch('tsconfig.json', ['build'], browserSync.reload);
     gulp.watch(paths.source.css, ['copy-css']);
     gulp.watch([paths.source.html, paths.source.index], ['copy-html'], browserSync.reload);
+
     // TypeScript files contain paths to HTML templates which may change.
     // Need to copy html.
-    gulp.watch(paths.source.js, ['copy-js', 'copy-html'], browserSync.reload);
+    gulp.watch(paths.source.js, ['tslint', 'copy-js', 'copy-html'], browserSync.reload);
 });
 
 gulp.task('build', ['clean'], function() {
