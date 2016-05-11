@@ -13,8 +13,8 @@ var paths = {
     source: {
         css: 'app/**/*.less',
         js: 'app/**/*.ts',
-        html: 'app/**/*.html',
-        index: 'index.html'
+        html: ['app/**/*.html', '!app/index.html'],
+        index: 'app/index.html'
     },
     build: {
         root: 'build',

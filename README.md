@@ -13,4 +13,3 @@ This fork of Angular2 Tour of Heroes app is used to illustrate how to put in a p
 
 1. Minify CSS.
 2. Watch tsconfig.json and rebuild the project.
-3. Add FontAwsome icons and style the project a bit.
