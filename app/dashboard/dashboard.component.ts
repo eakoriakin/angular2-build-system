@@ -1,11 +1,10 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
-import { Hero } from './hero';
-import { HeroService } from './hero.service';
+import { Hero } from '../services/hero';
+import { HeroService } from '../services/hero.service';
 
 @Component({
-    selector: 'my-dashboard',
-    templateUrl: 'app/dashboard.component.html'
+    templateUrl: 'app/dashboard/dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
     public heroes = new Array<Hero>();

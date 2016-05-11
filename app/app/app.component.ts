@@ -1,13 +1,13 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { HeroesComponent } from './heroes.component';
-import { HeroDetailComponent } from './hero-detail.component';
-import { DashboardComponent } from './dashboard.component';
-import { HeroService } from './hero.service';
+import { HeroesComponent } from '../heroes/heroes.component';
+import { HeroDetailComponent } from '../hero/hero.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { HeroService } from '../services/hero.service';
 
 @Component({
     selector: 'app',
-    templateUrl: 'app/app.component.html',
+    templateUrl: 'app/app/app.component.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [HeroService]
 })

@@ -1,8 +1,8 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
         "target": "ES5",
         "module": "system",
-        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "moduleResolution": "node",
@@ -11,12 +11,12 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "files": [
-        "app/boot.ts",
-        "app/app.component.ts",
-        "app/dashboard.component.ts",
-        "app/hero-detail.component.ts",
-        "app/hero.service.ts",
-        "app/hero.ts",
-        "app/heroes.component.ts"
+        "app/app.ts",
+        "app/services/hero.service.ts",
+        "app/services/hero.ts",
+        "app/app/app.component.ts",
+        "app/dashboard/dashboard.component.ts",
+        "app/hero/hero.component.ts",
+        "app/heroes/heroes.component.ts"
     ]
 }

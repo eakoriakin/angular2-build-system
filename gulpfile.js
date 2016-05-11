@@ -19,7 +19,7 @@ var paths = {
     build: {
         root: 'build',
         css: 'build/css',
-        js: 'build/app',
+        js: 'build',
         html: 'build/app',
         libraries: 'build/libraries'
     }
@@ -62,7 +62,9 @@ gulp.task('copy-html', function() {
 // Compiles TypeScript and copies it to the distribution directory.
 gulp.task('copy-js', function() {
     return gulp
-        .src(tsConfig.files)
+        .src(tsConfig.files, {
+            base: './'
+        })
         .pipe(sourcemaps.init())
         .pipe(typescript(tsConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
@@ -95,7 +97,9 @@ gulp.task('start', ['build'], function() {
 
     gulp.watch(paths.source.css, ['copy-css']);
     gulp.watch([paths.source.html, paths.source.index], ['copy-html'], browserSync.reload);
-    gulp.watch(paths.source.js, ['copy-js'], browserSync.reload);
+    // TypeScript files contain paths to HTML templates which may change.
+    // Need to copy html.
+    gulp.watch(paths.source.js, ['copy-js', 'copy-html'], browserSync.reload);
 });
 
 gulp.task('build', ['clean'], function() {
