@@ -17,8 +17,6 @@
         "app/hero-detail.component.ts",
         "app/hero.service.ts",
         "app/hero.ts",
-        "app/heroes.component.ts",
-        "typings/node/node.d.ts",
-        "typings/tsd.d.ts"
+        "app/heroes.component.ts"
     ]
 }
