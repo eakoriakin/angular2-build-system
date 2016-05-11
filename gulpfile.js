@@ -1,13 +1,13 @@
 const gulp = require('gulp'),
     del = require('del'),
     typescript = require('gulp-typescript'),
-    tsConfig = require('./tsconfig.json'),
+    tsconfig = require('./tsconfig.json'),
     sourcemaps = require('gulp-sourcemaps'),
     tslint = require('gulp-tslint'),
     browserSync = require('browser-sync'),
-    reload = browserSync.reload,
     concat = require('gulp-concat'),
-    less = require('gulp-less');
+    less = require('gulp-less'),
+    cleanCss = require('gulp-clean-css');
 
 var paths = {
     source: {
@@ -62,11 +62,11 @@ gulp.task('copy-html', function() {
 // Compiles TypeScript and copies it to the distribution directory.
 gulp.task('copy-js', function() {
     return gulp
-        .src(tsConfig.files, {
+        .src(tsconfig.files, {
             base: './'
         })
         .pipe(sourcemaps.init())
-        .pipe(typescript(tsConfig.compilerOptions))
+        .pipe(typescript(tsconfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.build.js));
 });
@@ -76,6 +76,7 @@ gulp.task('copy-css', function() {
     return gulp.src(paths.source.css)
         .pipe(concat('app.css'))
         .pipe(less())
+        .pipe(cleanCss())
         .pipe(gulp.dest(paths.build.css))
         .pipe(browserSync.stream());
 });
