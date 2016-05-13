@@ -1,4 +1,11 @@
+[npm-image]: https://img.shields.io/npm/v/angular2-build-system.svg
+[npm-url]: https://npmjs.org/package/angular2-build-system
+[downloads-image]: https://img.shields.io/npm/dm/angular2-build-system.svg
+
 # Angular2 build system
+
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][npm-url]
 
 ## Overview
 
