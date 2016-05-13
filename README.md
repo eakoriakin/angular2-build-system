@@ -6,7 +6,7 @@ This is a fork of Angular2 Tour of Heroes app illustrating a mimimun build syste
 
 ## Getting started
 
-1.`npm install`
+1. `npm install`
 2. `gulp`
 
 ## TODO
