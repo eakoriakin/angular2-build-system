@@ -8,7 +8,3 @@ This is a fork of Angular2 Tour of Heroes app illustrating a mimimun build syste
 
 1. `npm install`
 2. `gulp`
-
-## TODO
-
-1. Check if there are any unnecessary dependencies.
