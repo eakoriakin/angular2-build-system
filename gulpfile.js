@@ -9,7 +9,7 @@ const gulp = require('gulp'),
     less = require('gulp-less'),
     cleanCss = require('gulp-clean-css');
 
-var paths = {
+const paths = {
     source: {
         css: 'app/**/*.less',
         js: 'app/**/*.ts',
@@ -25,12 +25,10 @@ var paths = {
     }
 }
 
-// Cleans the distribution directory.
 gulp.task('clean', function() {
     return del(paths.build.root + '/**/*');
 });
 
-// Copies dependencies to the distribution directory.
 gulp.task('copy-libraries', ['clean'], function() {
     gulp.src([
             'node_modules/angular2/bundles/angular2-polyfills.js',
@@ -50,7 +48,6 @@ gulp.task('copy-libraries', ['clean'], function() {
         .pipe(gulp.dest(paths.build.libraries + '/rxjs'));
 });
 
-// Compiles TypeScript and copies it to the distribution directory.
 gulp.task('copy-html', function() {
     gulp.src(paths.source.index)
         .pipe(gulp.dest(paths.build.root));
@@ -59,7 +56,6 @@ gulp.task('copy-html', function() {
         .pipe(gulp.dest(paths.build.html));
 });
 
-// Compiles TypeScript and copies it to the distribution directory.
 gulp.task('copy-js', function() {
     return gulp
         .src(tsconfig.files, {
@@ -71,7 +67,6 @@ gulp.task('copy-js', function() {
         .pipe(gulp.dest(paths.build.js));
 });
 
-// Compiles CSS, copies it to the distribution directory and auto-injects it into browsers.
 gulp.task('copy-css', function() {
     return gulp.src(paths.source.css)
         .pipe(concat('app.css'))
@@ -81,14 +76,16 @@ gulp.task('copy-css', function() {
         .pipe(browserSync.stream());
 });
 
-// Lints the project.
-gulp.task('tslint', function() {
+gulp.task('check-js', function() {
     return gulp.src(paths.source.js)
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
 });
 
-// Starts the project.
+gulp.task('build', ['clean'], function() {
+    gulp.start(['check-js', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+});
+
 gulp.task('start', ['build'], function() {
     browserSync.init({
         server: {
@@ -102,11 +99,7 @@ gulp.task('start', ['build'], function() {
 
     // TypeScript files contain paths to HTML templates which may change.
     // Need to copy html.
-    gulp.watch(paths.source.js, ['tslint', 'copy-js', 'copy-html'], browserSync.reload);
-});
-
-gulp.task('build', ['clean'], function() {
-    gulp.start(['tslint', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+    gulp.watch(paths.source.js, ['check-js', 'copy-js', 'copy-html'], browserSync.reload);
 });
 
 gulp.task('default', ['start']);
