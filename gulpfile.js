@@ -1,4 +1,5 @@
 const gulp = require('gulp'),
+    runSequence = require('run-sequence'),
     del = require('del'),
     typescript = require('gulp-typescript'),
     tsconfig = require('./tsconfig.json'),
@@ -14,7 +15,8 @@ const paths = {
         css: 'app/**/*.less',
         js: 'app/**/*.ts',
         html: ['app/**/*.html', '!app/index.html'],
-        index: 'app/index.html'
+        index: 'app/index.html',
+        config: ['tsconfig.json']
     },
     build: {
         root: 'build',
@@ -25,16 +27,19 @@ const paths = {
     }
 }
 
-gulp.task('clean', function() {
-    del(paths.build.root + '/**/*');
+var build = function(complete) {
+    runSequence('clean', ['copy-libraries', 'check-js', 'copy-js', 'copy-css', 'copy-html'], complete);
+}
 
-    // Create an empty distribution directory to avoid errors.
-    // See https://github.com/eakoryakin/angular2-build-system/issues/1
+gulp.task('clean', function() {
+    // Create an empty distribution directory to avoid errors (See #1).
     return gulp.src('/')
         .pipe(gulp.dest(paths.build.root));
+
+    del.sync([paths.build.root + '/**/*', '!' + paths.build.root]);
 });
 
-gulp.task('copy-libraries', ['clean'], function() {
+gulp.task('copy-libraries', function() {
     gulp.src([
             'node_modules/angular2/bundles/angular2-polyfills.js',
             'node_modules/angular2/bundles/angular2.js',
@@ -87,8 +92,8 @@ gulp.task('check-js', function() {
         .pipe(tslint.report('verbose'));
 });
 
-gulp.task('build', ['clean'], function() {
-    gulp.start(['check-js', 'copy-libraries', 'copy-css', 'copy-html', 'copy-js']);
+gulp.task('build', function() {
+    build(browserSync.reload);
 });
 
 gulp.task('start', ['build'], function() {
@@ -98,13 +103,21 @@ gulp.task('start', ['build'], function() {
         }
     });
 
-    gulp.watch('tsconfig.json', ['build'], browserSync.reload);
+    // Watch CSS files.
     gulp.watch(paths.source.css, ['copy-css']);
-    gulp.watch([paths.source.html, paths.source.index], ['copy-html'], browserSync.reload);
 
-    // TypeScript files contain paths to HTML templates which may change.
-    // Need to copy html.
-    gulp.watch(paths.source.js, ['check-js', 'copy-js', 'copy-html'], browserSync.reload);
+    // Watch HTML files.
+    gulp.watch([paths.source.html, paths.source.index], ['copy-html', browserSync.reload]);
+
+    // Watch JS files.
+    gulp.watch(paths.source.js).on('change', function() {
+        build(browserSync.reload);
+    });
+
+    // Watch configuration files.
+    gulp.watch(paths.source.config).on('change', function() {
+        build(browserSync.reload);
+    });
 });
 
 gulp.task('default', ['start']);
