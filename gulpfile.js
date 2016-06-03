@@ -26,7 +26,12 @@ const paths = {
 }
 
 gulp.task('clean', function() {
-    return del(paths.build.root + '/**/*');
+    del(paths.build.root + '/**/*');
+
+    // Create an empty distribution directory to avoid errors.
+    // See https://github.com/eakoryakin/angular2-build-system/issues/1
+    return gulp.src('/')
+        .pipe(gulp.dest(paths.build.root));
 });
 
 gulp.task('copy-libraries', ['clean'], function() {
@@ -42,7 +47,7 @@ gulp.task('copy-libraries', ['clean'], function() {
         ])
         .pipe(gulp.dest(paths.build.libraries + '/systemjs'));
 
-    gulp.src([
+    return gulp.src([
             'node_modules/rxjs/bundles/Rx.js'
         ])
         .pipe(gulp.dest(paths.build.libraries + '/rxjs'));
