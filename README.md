@@ -10,6 +10,7 @@
 ## Overview
 
 This is a fork of Angular2 Tour of Heroes app illustrating a mimimun build system setup for Angular 2, which includes Gulp, TypeScript, TSLint, SystemJS, Browsersync and LESS.
+Browsersync is used to automatically reload web application when HTML, TypeScript or CSS files are changed.
 
 ## Getting started
 
@@ -20,7 +21,7 @@ This is a fork of Angular2 Tour of Heroes app illustrating a mimimun build syste
 
 ### gulp build
 
-Builds the app to the the distribution directory.
+Builds the app to the distribution directory.
 
 ### gulp start
 
@@ -44,8 +45,7 @@ Copies HTML files to the distribution directory.
 
 ### gulp copy-js
 
-Compiles TypeScript files and copies them to the distribution directory.
-It also creates sourcemap files.
+Compiles TypeScript files, creates sourcemap files and copies them to the distribution directory.
 
 ### gulp check-js
 
@@ -54,5 +54,3 @@ Checks TypeScript files for mistakes.
 ### gulp copy-css
 
 Compiles LESS files and copies them to the distribution directory.
-It also uses Browsersync to auto-inject CSS files to browsers when they are changed.
-
