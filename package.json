@@ -29,7 +29,9 @@
         "es6-promise": "3.1.2",
         "es6-shim": "0.35.0",
         "rxjs": "5.0.0-beta.6",
-        "systemjs": "0.19.27"
+        "systemjs": "0.19.27",
+        "reflect-metadata": "0.1.2",
+        "zone.js": "0.6.12"
     },
     "devDependencies": {
         "typescript": "1.8.10",
