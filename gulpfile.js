@@ -1,4 +1,5 @@
 const gulp = require('gulp'),
+    merge = require('merge2'),
     runSequence = require('run-sequence'),
     del = require('del'),
     typescript = require('gulp-typescript'),
@@ -67,14 +68,22 @@ gulp.task('copy-html', function() {
 });
 
 gulp.task('copy-js', function() {
-    return gulp
-        .src(tsconfig.files, {
+    // Create TS declaration files.
+    var tsResult = gulp.src(tsconfig.files, {
             base: './'
         })
         .pipe(sourcemaps.init())
-        .pipe(typescript(tsconfig.compilerOptions))
+        .pipe(typescript(tsconfig.compilerOptions));
+
+    // Create sourcemaps.
+    tsResult.js
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.build.js));
+
+    return merge([
+        tsResult.dts.pipe(gulp.dest(paths.build.js)),
+        tsResult.js.pipe(gulp.dest(paths.build.js))
+    ]);
 });
 
 gulp.task('copy-css', function() {

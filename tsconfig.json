@@ -6,11 +6,14 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "moduleResolution": "node",
+        "sourceMap": true,
+        "declaration": true,
         "removeComments": false,
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true
     },
     "files": [
+        "node_modules/angular2/typings/browser.d.ts",
         "app/app.ts",
         "app/services/hero.service.ts",
         "app/services/hero.ts",
