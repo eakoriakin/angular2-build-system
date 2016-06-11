@@ -105,27 +105,29 @@ gulp.task('build', function() {
     build(browserSync.reload);
 });
 
-gulp.task('start', ['build'], function() {
-    browserSync.init({
-        server: {
-            baseDir: paths.build.root
-        }
-    });
+gulp.task('start', function() {
+    build(function() {
+        browserSync.init({
+            server: {
+                baseDir: paths.build.root
+            }
+        });
 
-    // Watch CSS files.
-    gulp.watch(paths.source.css, ['copy-css']);
+        // Watch CSS files.
+        gulp.watch(paths.source.css, ['copy-css']);
 
-    // Watch HTML files.
-    gulp.watch([paths.source.html, paths.source.index], ['copy-html', browserSync.reload]);
+        // Watch HTML files.
+        gulp.watch([paths.source.html, paths.source.index], ['copy-html', browserSync.reload]);
 
-    // Watch JS files.
-    gulp.watch(paths.source.js).on('change', function() {
-        build(browserSync.reload);
-    });
+        // Watch JS files.
+        gulp.watch(paths.source.js).on('change', function() {
+            build(browserSync.reload);
+        });
 
-    // Watch configuration files.
-    gulp.watch(paths.source.config).on('change', function() {
-        build(browserSync.reload);
+        // Watch configuration files.
+        gulp.watch(paths.source.config).on('change', function() {
+            build(browserSync.reload);
+        });
     });
 });
 
