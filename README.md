@@ -35,10 +35,6 @@ Does the same as `gulp start`.
 
 Cleans the distribution directory.
 
-### gulp copy-libraries
-
-Copies libraries to the distribution directory.
-
 ### gulp copy-html
 
 Copies HTML files to the distribution directory.
