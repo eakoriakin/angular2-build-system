@@ -23,8 +23,7 @@ const paths = {
         root: 'build',
         css: 'build/css',
         js: 'build',
-        html: 'build/app',
-        libraries: 'build/libraries'
+        html: 'build/app'
     }
 }
 
