@@ -47,7 +47,7 @@ Copies HTML files to the distribution directory.
 
 Compiles TypeScript files, creates declaration `d.ts` files and sourcemap files, and copies files to the distribution directory.
 
-### gulp check-js
+### gulp check-ts
 
 Checks TypeScript files for mistakes.
 

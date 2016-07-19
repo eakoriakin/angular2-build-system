@@ -29,7 +29,7 @@ const paths = {
 }
 
 var build = function(complete) {
-    runSequence('clean', ['copy-libraries', 'check-js', 'copy-js', 'copy-css', 'copy-html'], complete);
+    runSequence('clean', ['check-ts', 'copy-js', 'copy-css', 'copy-html'], complete);
 }
 
 gulp.task('clean', function() {
@@ -38,25 +38,6 @@ gulp.task('clean', function() {
         .pipe(gulp.dest(paths.build.root));
 
     del.sync([paths.build.root + '/**/*', '!' + paths.build.root]);
-});
-
-gulp.task('copy-libraries', function() {
-    gulp.src([
-            'node_modules/angular2/bundles/angular2-polyfills.js',
-            'node_modules/angular2/bundles/angular2.js',
-            'node_modules/angular2/bundles/router.js',
-        ])
-        .pipe(gulp.dest(paths.build.libraries + '/angular2'));
-
-    gulp.src([
-            'node_modules/systemjs/dist/system.src.js'
-        ])
-        .pipe(gulp.dest(paths.build.libraries + '/systemjs'));
-
-    return gulp.src([
-            'node_modules/rxjs/bundles/Rx.js'
-        ])
-        .pipe(gulp.dest(paths.build.libraries + '/rxjs'));
 });
 
 gulp.task('copy-html', function() {
@@ -95,7 +76,7 @@ gulp.task('copy-css', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('check-js', function() {
+gulp.task('check-ts', function() {
     return gulp.src(paths.source.js)
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
@@ -108,8 +89,9 @@ gulp.task('build', function() {
 gulp.task('start', function() {
     build(function() {
         browserSync.init({
+            startPath: paths.build.root,
             server: {
-                baseDir: paths.build.root
+                baseDir: './'
             }
         });
 
