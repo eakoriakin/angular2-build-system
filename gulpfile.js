@@ -77,8 +77,12 @@ gulp.task('copy-css', function() {
 
 gulp.task('check-ts', function() {
     return gulp.src(paths.source.js)
-        .pipe(tslint())
-        .pipe(tslint.report('verbose'));
+        .pipe(tslint({
+            formatter: 'verbose'
+        }))
+        .pipe(tslint.report({
+            emitError: false
+        }));
 });
 
 gulp.task('build', function() {
